@@ -1,0 +1,74 @@
+EMPRESA DE ENVIO DE PAQUETERIA
+
+envia paquetes a diferentes ciudades de departamentos, cada ruta tiene cierto punto de control para que el usuario pueda consultar la localizacion de su paquetes
+-cantidad de tiempo y dinero que la empresa gasta para el manejo de ganancias
+-cada punto de control tiene un espacio limitado, por lo que se controla por medio de colas
+-registro de clientes, paquetes, rutas y ganancias
+-el sistema debe ser configurable por los usuarios de mayor rango: Administradores (se encargan de todo lo relacionado con usuarios, rutas y puntos de control), Operadores y Recepcionistas, solo pueden modificar los aspectos propios de su jerarquia
+-varias rutas pueden tener el mismo destino
+-cada destino tiene una cuota de destino que es cobrada al cliente por paquete
+-el costo que tienen los paquetes en cada punto de control se determina multipicando la cantidad de horas que un paquete estuvo estuvo en el punto de control por la tarifa de operacion
+
+ADMINISTRADORES
+
+-la tarifa de operacion es fijada por un administrador, se puede modificar pero no debe afectar a los paquetes previos a su modificacion. Un punto de control puede tener su propia tarifa
+-la cuota de destino es fijada por un administrador, se puede modificar pero no debe afectar a los paquetes previos
+-los admins pueden desactivar rutas si no tienen paquetes
+-los admins pueden agregar o quitar puntos de control solo si no hay paquetes en dicha ruta
+-se pueden modificar datos de los puntos de control solo si no tienen paquetes en cola
+-los usuarios pueden ser desactivados para que ya no puedan ingresar al sistema
+-los admins pueden ver los reportes de:
+-- Reporte de rutas indicando la cantidad de paquetes que están actualmente en ruta e indicando la cantidad de paquetes que ya han salido de la ruta
+--Reporte de ganancias en un intervalo de tiempo. El reporte debe incluir el listado de cada ruta con sus costos, ingresos y ganancias. Opcionalmente se puede filtrar por ruta.
+--Reporte de clientes. El reporte debe incluir por cada cliente el listado de los paquetes entregados incluyendo los costos, ingresos y ganancias. Opcionalmente se puede filtrar por cliente.
+--Reporte de las 3 rutas más populares en un intervalo de tiempo. Se debe incluir la cantidad de paquetes que han recorrido la ruta.
+-BONUS: Ver la imagen de una ruta seleccionada.
+OPERADORES
+
+-los operadores son los encargados de procesar cada paquete en los puntos de control, en este caso, consiste en registrar manualmente las horas que el paquete tardo en el punto de control
+-cada operador es asignado a uno o varios puntos de control y solo puede procesar los pquetes de los puntos de control que tiene asignados
+-los Recepcionistas son los encargados de los clientes, el ingreso de paquetes y registrar cuando un paquete ya fue retirado por el cliente cuando llega a su destino
+-Cuando un paquete es ingresado, el precio que se le cobra al cliente está determinado por la cantidad de libras que pesa el paquete más la cuota de destino de cada paquete.
+
+CLIENTE
+
+-Un cliente puede ingresar varios paquetes a la vez pero solo se genera una factura que incluye a cada paquete.
+-al momento de hacer la factura, si el nit es nuevo, se debe mostrar ventana para creacion del cliente, de lo contrario, muestra los datos del cliente ya registrado
+-no debe haber bloqueo de paquetes por la cola (colas separadas)
+-el precio por libra es fijado por un admin y es parejo para todo paquete, se puede modificar, pero ya no debe afectar a los que ya se realizaron
+-el proceso de paqueteria debe tener colas diferentes, asi movilizar paquetes cuando haya espacio libre
+
+RECEPCIONISTAS
+
+-los Recepcionistas deben tener un listado de los paquetes que ya estan en su destino, pero que no han sido recogidos
+-los Recepcionistas deben poder consultar a localizacion (punto de control) de los paquetes y debe mostrar cuanto tiempo lleva en ruta
+
+
+backend
+Servidor en Go usando framework Gin
+Frontend
+Vue.js
+
+obligatorio uso de maven para el backend
+
+minimo: rutas, clientes y puntos de control
+
+
+Repo Git
+-codigo
+manual tecnico
+-diagrama de clases
+-glosario
+-casos de uso alto nivel
+-casos de usando
+-diagrama de secuencias del sistema
+-diagramas E/R
+-diagramas de tablas
+-Mapeo fisico de la DB
+manual de usuario
+backup base de datos con minimo
+-3 usuarios de cada rol en la aplicacion
+-5 rutas con 4 puntos de control en cada una
+-5 clientes
+-3 paquetes en ruta por cliente
+-5 paquetes entregados por cada cliente
