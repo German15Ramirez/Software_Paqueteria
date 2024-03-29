@@ -23,6 +23,7 @@ ADMINISTRADORES
 --Reporte de clientes. El reporte debe incluir por cada cliente el listado de los paquetes entregados incluyendo los costos, ingresos y ganancias. Opcionalmente se puede filtrar por cliente.
 --Reporte de las 3 rutas más populares en un intervalo de tiempo. Se debe incluir la cantidad de paquetes que han recorrido la ruta.
 -BONUS: Ver la imagen de una ruta seleccionada.
+
 OPERADORES
 
 -los operadores son los encargados de procesar cada paquete en los puntos de control, en este caso, consiste en registrar manualmente las horas que el paquete tardo en el punto de control
@@ -60,7 +61,7 @@ manual tecnico
 -diagrama de clases
 -glosario
 -casos de uso alto nivel
--casos de usando
+-casos de uso
 -diagrama de secuencias del sistema
 -diagramas E/R
 -diagramas de tablas

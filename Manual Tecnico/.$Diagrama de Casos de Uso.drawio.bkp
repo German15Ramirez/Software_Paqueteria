@@ -1,0 +1,73 @@
+<mxfile host="Electron" modified="2024-03-27T19:24:05.487Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="4EtS91ktruRz4uRXn-68" version="24.1.0" type="device">
+  <diagram name="Página-1" id="hTnVwhhS9ad8yuLtQ0vO">
+    <mxGraphModel dx="2049" dy="1191" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dYeRYfeR8nqmptSh175r-4" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="90" y="170" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dYeRYfeR8nqmptSh175r-5" value="Operador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="680" y="70" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dYeRYfeR8nqmptSh175r-6" value="Recepcionista" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="60" y="640" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dYeRYfeR8nqmptSh175r-7" value="Cliente" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="720" y="540" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dYeRYfeR8nqmptSh175r-9" value="Modificar Datos de Punto de Control" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="195" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-1" value="Desactivar Usuario" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="121" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-2" value="Administrar Usuarios" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="252" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-3" value="Agregar Punto de Control A Ruta" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="283" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-4" value="Configurar Tarifas y Cuotas" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="40" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-5" value="Asignar Paquete a Ruta" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="690" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-6" value="Ver Reportes Varios" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="465" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-7" value="Modificar Datos de Punto de Control" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="366" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-8" value="Gestionar Rutas y Puntos de Control" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="150" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-9" value="Modificar Tiempo de Procesamiento de Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="485" y="140" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-10" value="Procesar Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="60" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-11" value="Consultar Estado de Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="760" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-12" value="Registrar Cliente" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="590" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-13" value="Ingresar Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="640" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-14" value="Consultar Estado de Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="555" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-15" value="Dejar Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="465" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qkDabjTNDC87zUi6TEeZ-16" value="Recibir Paquete" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="660" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
