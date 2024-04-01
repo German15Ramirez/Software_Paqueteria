@@ -1,0 +1,77 @@
+CREATE DATABASE gestion_paqueteria;
+
+USE gestion_paqueteria;
+
+CREATE TABLE `clientes` (
+  `cliente_id` int NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `nit` int DEFAULT NULL,
+  `direccion` varchar(45) DEFAULT NULL,
+  `telefono` int DEFAULT NULL,
+  PRIMARY KEY (`cliente_id`)
+);
+
+CREATE TABLE `ganancias` (
+  `ganancias_id` int NOT NULL,
+  `ruta_id` int DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `ingresos` float DEFAULT NULL,
+  `costos` float DEFAULT NULL,
+  `ganancias` float DEFAULT NULL,
+  PRIMARY KEY (`ganancias_id`),
+  KEY `fk_ruta_id_ganancias_idx` (`ruta_id`),
+  CONSTRAINT `fk_ruta_id_ganancias` FOREIGN KEY (`ruta_id`) REFERENCES `rutas` (`ruta_id`)
+);
+
+REATE TABLE `operadores` (
+  `operador_id` int NOT NULL,
+  `usuario_id` int DEFAULT NULL,
+  `punto_de_control_id` int DEFAULT NULL,
+  PRIMARY KEY (`operador_id`),
+  KEY `fk_usuario_id_operadores_idx` (`usuario_id`),
+  KEY `fk_punto_de_control_id_operadores_idx` (`punto_de_control_id`),
+  CONSTRAINT `fk_punto_de_control_id_operadores` FOREIGN KEY (`punto_de_control_id`) REFERENCES `puntos_de_control` (`puntos_de_control_id`),
+  CONSTRAINT `fk_usuario_id_operadores` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`)
+);
+
+CREATE TABLE `paquetes` (
+  `paquete_id` int NOT NULL,
+  `cliente_id` int NOT NULL,
+  `peso_libras` float DEFAULT NULL,
+  `destino` varchar(45) DEFAULT NULL,
+  `fecha_ingreso` date DEFAULT NULL,
+  `fecha_salida` date DEFAULT NULL,
+  `estado` enum('En Cola','En Ruta') DEFAULT NULL,
+  PRIMARY KEY (`paquete_id`),
+  KEY `fk_cliente_id_paquetes_idx` (`cliente_id`),
+  CONSTRAINT `fk_cliente_id_paquetes` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`cliente_id`)
+);
+
+CREATE TABLE `puntos_de_control` (
+  `puntos_de_control_id` int NOT NULL,
+  `ruta_id` int DEFAULT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `capacidad_cola` int DEFAULT NULL,
+  `tarifa_operacional` float DEFAULT NULL,
+  PRIMARY KEY (`puntos_de_control_id`),
+  KEY `fk_ruta_id_puntos_de_control_idx` (`ruta_id`),
+  CONSTRAINT `fk_ruta_id_puntos_de_control` FOREIGN KEY (`ruta_id`) REFERENCES `rutas` (`ruta_id`)
+);
+
+CREATE TABLE `rutas` (
+  `ruta_id` int NOT NULL,
+  `destino` varchar(45) DEFAULT NULL,
+  `tarifa_operacion` float DEFAULT NULL,
+  `capacidad_maxima` int DEFAULT NULL,
+  PRIMARY KEY (`ruta_id`)
+);
+
+CREATE TABLE `usuarios` (
+  `usuario_id` int NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `correo` varchar(45) DEFAULT NULL,
+  `telefono` int DEFAULT NULL,
+  `contraseña` varchar(45) DEFAULT NULL,
+  `rol` enum('Recepcionista','Administrador','Operador') NOT NULL,
+  PRIMARY KEY (`usuario_id`)
+);

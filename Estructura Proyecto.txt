@@ -1,0 +1,12 @@
+Explicación de la Estructura:
+
+-backend: Aquí se encuentra todo el código relacionado con el backend de la aplicación en Go. Tiene archivos para la configuración, manejo de rutas, controladores de la API, modelos de datos (si es necesario), y otras utilidades.
+-frontend: Contiene el código del frontend de la aplicación desarrollado con Vue.js. La carpeta public/ es para archivos estáticos como HTML, mientras que src/ contiene el código JavaScript y Vue.js. Dentro de src/ se tienen carpetas para recursos estáticos, componentes, vistas principales, etc.
+-database: Contiene scripts SQL u otros archivos relacionados con la configuración e inicialización de la base de datos.
+-documentacion: Contiene la documentacion para una mejor comprension de la estructura del proyecto, incluye desde diagramas, glosario y demas documentacion como el manual de usuario
+
+Conexión entre Componentes:
+
+El backend en Go se encargará de manejar la lógica del servidor, la comunicación con la base de datos y proporcionar una API REST para que el frontend pueda consumirla.
+El frontend desarrollado con Vue.js se comunica con el backend a través de llamadas HTTP (por ejemplo, utilizando Axios o Fetch) para obtener datos y enviar solicitudes al servidor.
+
