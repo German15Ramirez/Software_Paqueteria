@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="91b20683-64ab-4d4b-b0bf-114a6d6322b7" name="gestion_paqueteria Mapping">
+      <data-sources db="3020d502-fc33-480b-9777-3e696d6ece33" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+  </component>
+</project>
