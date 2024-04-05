@@ -1,0 +1,1 @@
+package tarifas_globales
