@@ -26,7 +26,8 @@ func main() {
 	puntoControlHandler := puntos_de_control.NewPuntoDeControlHandler(db)
 	router.POST("/crear_punto_de_control", puntoControlHandler.CrearPuntoDeControl)
 	router.GET("/listar_puntos_de_control", puntoControlHandler.ListarPuntosDeControl)
-
+	router.PUT("/actualizar_punto_de_control", puntoControlHandler.ActualizarPuntoDeControl)
+	router.DELETE("/eliminar_punto_de_control/:id", puntoControlHandler.EliminarPuntoDeControl)
 	// Rutas de Gin para rutas
 	rutaHandler := rutas.NewRutaHandler(db)
 	router.POST("/crear_ruta", rutaHandler.CrearRuta)
