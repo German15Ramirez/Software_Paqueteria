@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	"gestionpaquetes/clientes"
+	"gestionpaquetes/paquetes"
 	"gestionpaquetes/puntos_de_control"
 	"gestionpaquetes/rutas"
 	"gestionpaquetes/usuarios"
@@ -36,6 +37,10 @@ func main() {
 	router.PUT("/actualizar_ruta", rutaHandler.ActualizarRuta)
 	router.DELETE("/eliminar_ruta/:id", rutaHandler.EliminarRuta)
 
+	//especie de modificacion de CRUD de tarifas
+	router.GET("/rutas/:id/tarifa_operacional", rutaHandler.ObtenerTarifaOperacion)
+	router.PUT("/rutas/:id/actualizar_tarifa_global", rutaHandler.ActualizarTarifaGlobal)
+
 	// Rutas de Gin para usuarios
 	usuarioHandler := usuarios.NewUsuarioHandler(db)
 	router.POST("/crear_usuario", usuarioHandler.CrearUsuario)
@@ -51,6 +56,9 @@ func main() {
 	router.DELETE("/eliminar_cliente/:id", clienteHandler.EliminarCliente)
 
 
+	// Rutas de Gin para la localización de paquetes
+	paqueteHandler := paquetes.NewPaqueteHandler(db)
+	router.GET("/paquetes/:id/localizacion", paqueteHandler.ObtenerLocalizacionPaquete)
 	// Iniciar el servidor Gin en el puerto 8080
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal("Error al iniciar el servidor Gin:", err)

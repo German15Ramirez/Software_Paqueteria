@@ -84,7 +84,7 @@ func (h *RutaHandler) existeRutaID(id int) bool {
 	err := h.db.QueryRow("SELECT COUNT(*) FROM rutas WHERE ruta_id = ?", id).Scan(&count)
 	if err != nil {
 		log.Printf("Error al verificar la existencia de la ruta:  %v", err)
-		return true // Por precaución, asumimos que la ruta ya existe
+		return true
 	}
 	return count > 0
 }
@@ -145,4 +145,48 @@ func (h *RutaHandler) EliminarRuta(c *gin.Context) {
 
 	// Responder con un mensaje de éxito
 	c.JSON(http.StatusOK, gin.H{"message": "Ruta eliminada exitosamente"})
+}
+
+func (h *RutaHandler) ObtenerTarifaOperacion(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de ruta inválido"})
+		return
+	}
+
+	// Consultar la base de datos para obtener la tarifa de operación de la ruta con el ID dado
+	var tarifaOperacion float64
+	err = h.db.QueryRow("SELECT tarifa_operacion FROM rutas WHERE ruta_id = ?", id).Scan(&tarifaOperacion)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Ruta no encontrada"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al obtener la tarifa de operación"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"tarifa_operacion": tarifaOperacion})
+}
+
+// ActualizarTarifaGlobal actualiza la tarifa global de una ruta.
+func (h *RutaHandler) ActualizarTarifaGlobal(c *gin.Context) {
+	idStr := c.Param("id")
+	_, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de ruta inválido"})
+		return
+	}
+
+	var nuevaTarifa float64
+	if err := c.ShouldBindJSON(&nuevaTarifa); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de tarifa inválidos"})
+		return
+	}
+
+	// Aquí iría la lógica para actualizar la tarifa global de la ruta con el ID dado
+	// Actualización en la base de datos, etc.
+
+	c.JSON(http.StatusOK, gin.H{"message": "Tarifa global actualizada exitosamente"})
 }
