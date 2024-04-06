@@ -3,6 +3,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -76,4 +77,71 @@ func (h *UsuarioHandler) ListarUsuarios(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, usuarios)
+}
+// ActualizarUsuario actualiza los datos de un usuario existente
+func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
+	var usuario Usuario
+
+	// Decodificar el cuerpo JSON de la solicitud en la estructura del usuario
+	if err := c.ShouldBindJSON(&usuario); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de usuario inválidos"})
+		return
+	}
+
+	// Verificar si el usuario que se intenta actualizar existe
+	if !h.existeUsuarioID(usuario.ID) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "El usuario no existe"})
+		return
+	}
+
+	// Actualizar los datos del usuario en la base de datos
+	_, err := h.db.Exec("UPDATE usuarios SET nombre=?, correo=?, telefono=?, contraseña=?, rol=? WHERE usuario_id=?",
+		usuario.Nombre, usuario.Correo, usuario.Telefono, usuario.Contraseña, usuario.Rol, usuario.ID)
+	if err != nil {
+		log.Printf("Error al ejecutar la consulta SQL de actualización: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al actualizar el usuario"})
+		return
+	}
+
+	// Responder con un mensaje de éxito
+	c.JSON(http.StatusOK, gin.H{"message": "Usuario actualizado exitosamente"})
+}
+
+// EliminarUsuario elimina un usuario existente
+func (h *UsuarioHandler) EliminarUsuario(c *gin.Context) {
+	// Obtener el ID del usuario de los parámetros de la ruta
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID de usuario inválido"})
+		return
+	}
+
+	// Verificar si el usuario que se intenta eliminar existe
+	if !h.existeUsuarioID(id) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "El usuario no existe"})
+		return
+	}
+
+	// Eliminar el usuario de la base de datos
+	_, err = h.db.Exec("DELETE FROM usuarios WHERE usuario_id = ?", id)
+	if err != nil {
+		log.Printf("Error al ejecutar la consulta SQL de eliminación: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al eliminar el usuario"})
+		return
+	}
+
+	// Responder con un mensaje de éxito
+	c.JSON(http.StatusOK, gin.H{"message": "Usuario eliminado exitosamente"})
+}
+
+// existeUsuarioID verifica si ya existe un usuario con el mismo ID en la base de datos
+func (h *UsuarioHandler) existeUsuarioID(id int) bool {
+	var count int
+	err := h.db.QueryRow("SELECT COUNT(*) FROM usuarios WHERE usuario_id = ?", id).Scan(&count)
+	if err != nil {
+		log.Printf("Error al verificar la existencia del usuario:  %v", err)
+		return true
+	}
+	return count > 0
 }
