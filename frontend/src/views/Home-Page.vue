@@ -10,7 +10,6 @@
     <div class="content">
       <router-link to="/login" class="btn">Iniciar Sesión</router-link>
       <router-link to="/about" class="btn about-btn">Acerca de</router-link>
-      <router-link to="/listar-usuarios" class="btn">Listar Usuarios</router-link>
     </div>
   </div>
 </template>

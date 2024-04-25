@@ -2,7 +2,7 @@
   <div class="about-container">
     <h2>Acerca de</h2>
     <p>Esta aplicación de Gestión de Paquetería IPC2 te permite realizar seguimiento de envíos, gestionar clientes y mucho más.</p>
-    <p>¡Esperamos que disfrutes usando nuestra aplicación!</p>
+    <p>¡Espero que disfrutes tu estadía en mi aplicación!</p>
     <img src="../assets/Tux.png" alt="Logo de la aplicación">
   </div>
 </template>

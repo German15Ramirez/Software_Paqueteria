@@ -1,6 +1,8 @@
 package usuarios
+
 import (
 	"database/sql"
+	"errors"
 	"log"
 	"net/http"
 	"strconv"
@@ -78,6 +80,7 @@ func (h *UsuarioHandler) ListarUsuarios(c *gin.Context) {
 
 	c.JSON(http.StatusOK, usuarios)
 }
+
 // ActualizarUsuario actualiza los datos de un usuario existente
 func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
 	var usuario Usuario
@@ -144,4 +147,40 @@ func (h *UsuarioHandler) existeUsuarioID(id int) bool {
 		return true
 	}
 	return count > 0
+}
+
+func (h *UsuarioHandler) VerificarCredenciales(c *gin.Context) {
+	var credenciales struct {
+		UsuarioID   int    `json:"usuario_id"`
+		Contraseña  string `json:"contraseña"` // Cambiar a "contraseña" en lugar de "contraseña" para que coincida con el JSON del frontend
+	}
+
+	// Decodificar los datos JSON del cuerpo de la solicitud
+	if err := c.ShouldBindJSON(&credenciales); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de credenciales inválidos"})
+		return
+	}
+
+	// Verificar las credenciales del usuario
+	rol, err := h.VerificarCredencialesBD(c, credenciales.UsuarioID, credenciales.Contraseña)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Usuario o contraseña incorrectos"})
+		return
+	}
+
+	// Devolver el rol del usuario
+	c.JSON(http.StatusOK, gin.H{"rol": rol})
+}
+
+// VerificarCredencialesBD verifica las credenciales del usuario en la base de datos
+func (h *UsuarioHandler) VerificarCredencialesBD(c *gin.Context, usuarioID int, contraseña string) (string, error) {
+	var rol string
+	err := h.db.QueryRow("SELECT rol FROM usuarios WHERE usuario_id = ? AND contraseña = ?", usuarioID, contraseña).Scan(&rol)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return "", errors.New("Usuario o contraseña incorrectos")
+		}
+		return "", err // Otro error
+	}
+	return rol, nil
 }

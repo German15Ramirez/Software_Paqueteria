@@ -1,17 +1,19 @@
 <template>
   <div class="admin-container">
     <div class="header">
-      <h1>Bienvenido de nuevo administrador: {{ adminName }}</h1>
+      <h1>Bienvenido de nuevo Administrador</h1>
     </div>
 
     <div class="options">
-      <h2>Opciones de administrador:</h2>
+      <h2 class="option-title">Reportes:</h2>
       <ul>
-        <li><router-link to="/admin/users">Administrar usuarios</router-link></li>
-        <li><router-link to="/admin/packages">Administrar paquetes</router-link></li>
-        <li><router-link to="/admin/reports">Ver reportes</router-link></li>
+        <li><router-link to="/admin/reports/route-report">Reporte de Rutas</router-link></li>
+        <li><router-link to="/admin/reports/profit-report">Reporte de Ganancias</router-link></li>
+        <li><router-link to="/admin/reports/customer-report">Reporte de Clientes</router-link></li>
+        <li><router-link to="/admin/reports/popular-routes-report">Reporte de Rutas Populares</router-link></li>
       </ul>
     </div>
+
   </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
 }
 
 .header h1 {
-  font-size: 1.5em;
+  font-size: 1.8em; /* Texto más grande */
   color: #fff;
   margin: 0;
 }
@@ -53,8 +55,8 @@ export default {
   margin-top: 20px;
 }
 
-.options h2 {
-  font-size: 1.2em;
+.option-title {
+  font-size: 1.4em; /* Texto más grande */
   margin-bottom: 10px;
 }
 
@@ -64,15 +66,18 @@ ul {
 }
 
 li {
+  font-size: 1.2em; /* Texto más grande */
   margin-bottom: 10px;
 }
 
 a {
   text-decoration: none;
   color: #007bff; /* Color azul de enlaces */
+  font-size: 1.2em; /* Texto más grande */
 }
 
 a:hover {
   text-decoration: underline;
 }
+
 </style>
