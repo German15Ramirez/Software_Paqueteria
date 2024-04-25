@@ -16,6 +16,9 @@ import ProfitReportPage from './views/ProfitReport-Page.vue';
 import CustomerReportPage from './views/CustomerReport-Page.vue';
 import PopularRoutesReportPage from './views/PopularRoutesReport-Page.vue';
 import AdminReportsPage from "@/views/AdminReports-Page.vue";
+import ListarUsuariosPage from "@/views/ListarUsuarios-Page.vue"; // Importa el componente ListarUsuariosPage
+import ListarRutasPage from "@/views/ListarRutas-Page.vue";
+import ListarPuntosPage from "@/views/ListarPuntos-Page.vue";
 
 const routes = [
     {
@@ -69,12 +72,12 @@ const routes = [
         component: AdminCheckpointsPage
     },
     {
-        path: '/receptionist/packages',
+        path: '/recep/packages',
         name: 'ListPackages',
         component: ListPackagesPage
     },
     {
-        path: '/receptionist/package-location',
+        path: '/recep/package-location',
         name: 'PackageLocation',
         component: PackageLocationPage
     },
@@ -102,6 +105,21 @@ const routes = [
         path: '/admin/reports/popular-routes-report',
         name: 'PopularRoutesReport',
         component: PopularRoutesReportPage
+    },
+    {
+        path: '/admin/users/listar',
+        name: 'ListarUsuarios',
+        component: ListarUsuariosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/routes/listar',
+        name: 'ListarRutas',
+        component: ListarRutasPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/checkpoints/listar',
+        name: 'ListarPuntosDeControl',
+        component: ListarPuntosPage // Agrega la ruta para ListarUsuariosPage
     }
 ];
 

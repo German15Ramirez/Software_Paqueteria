@@ -1,26 +1,37 @@
 <template>
-  <div class="list-packages-container">
-    <div class="header">
-      <h1>Listar Paquetes en la Ruta</h1>
+  <div>
+    <h1>Listar Paquetes</h1>
+    <div class="search-container">
+      <input type="text" v-model="destino" placeholder="Ingrese el destino">
+      <button @click="buscarPaquetes">Buscar</button>
     </div>
-
-    <div class="route-info">
-      <p>Ruta: {{ routeName }}</p>
-    </div>
-
-    <div class="package-list">
-      <h2>Lista de Paquetes</h2>
+    <div class="table-container">
       <table>
         <thead>
         <tr>
           <th>ID</th>
-          <th>Descripción</th>
+          <th>Cliente</th>
+          <th>Peso (libras)</th>
+          <th>Destino</th>
+          <th>Fecha de Ingreso</th>
+          <th>Fecha de Salida</th>
           <th>Estado</th>
-          <th>Acciones</th>
+          <th>Punto de Control</th>
+          <th>Ruta</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Aquí se listarán los paquetes -->
+        <tr v-for="paquete in paquetes" :key="paquete.ID">
+          <td>{{ paquete.ID }}</td>
+          <td>{{ paquete.NombreCliente }}</td>
+          <td>{{ paquete.PesoLibras }}</td>
+          <td>{{ paquete.Destino }}</td>
+          <td>{{ paquete.FechaIngreso }}</td>
+          <td>{{ paquete.FechaSalida }}</td>
+          <td>{{ paquete.Estado }}</td>
+          <td>{{ paquete.PuntoControl }}</td>
+          <td>{{ paquete.Ruta }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -28,54 +39,59 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      routeName: null
+      destino: '',
+      paquetes: []
     };
   },
-  mounted() {
-    // Lógica para obtener el nombre de la ruta
-    // Supongamos que obtienes el nombre de la ruta correctamente
-    this.routeName = "Nombre de la Ruta obtenido desde el backend";
+  methods: {
+    async buscarPaquetes() {
+      try {
+        const response = await axios.get('http://localhost:8080/listar_paquetes', {
+          params: { destino: this.destino }
+        });
+        this.paquetes = response.data;
+      } catch (error) {
+        console.error('Error al obtener paquetes:', error);
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-.list-packages-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+.search-container {
+  margin-bottom: 20px;
 }
 
-.header {
-  background-color: #212121; /* Color de fondo del encabezado */
-  padding: 20px;
-  text-align: center;
+.search-container input {
+  width: 200px;
+  padding: 5px;
+  margin-right: 10px;
 }
 
-.header h1 {
-  font-size: 1.8em; /* Texto más grande */
-  color: #fff;
-  margin: 0;
+.search-container button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-.route-info {
+.search-container button:hover {
+  background-color: #45a049;
+}
+
+.table-container {
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  border-radius: 5px;
+  padding: 10px;
   margin-top: 20px;
-}
-
-.route-info p {
-  font-size: 1.2em; /* Texto más grande */
-}
-
-.package-list {
-  margin-top: 20px;
-}
-
-.package-list h2 {
-  font-size: 1.4em; /* Texto más grande */
-  margin-bottom: 10px;
 }
 
 table {
@@ -86,10 +102,13 @@ table {
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
 }
 
 th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 </style>

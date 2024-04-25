@@ -56,7 +56,7 @@ func (h *UsuarioHandler) CrearUsuario(c *gin.Context) {
 
 // ListarUsuarios lista todos los usuarios
 func (h *UsuarioHandler) ListarUsuarios(c *gin.Context) {
-	rows, err := h.db.Query("SELECT usuario_id, nombre, correo, telefono, contraseña, rol FROM usuarios")
+	rows, err := h.db.Query("SELECT usuario_id, nombre, correo, telefono, contraseña, rol FROM usuarios ORDER BY usuario_id")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -67,6 +67,7 @@ func (h *UsuarioHandler) ListarUsuarios(c *gin.Context) {
 	for rows.Next() {
 		var usuario Usuario
 		if err := rows.Scan(&usuario.ID, &usuario.Nombre, &usuario.Correo, &usuario.Telefono, &usuario.Contraseña, &usuario.Rol); err != nil {
+			log.Printf("Error al escanear fila: %v", err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
@@ -74,13 +75,15 @@ func (h *UsuarioHandler) ListarUsuarios(c *gin.Context) {
 	}
 
 	if err := rows.Err(); err != nil {
+		log.Printf("Error al iterar sobre filas: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
+	log.Printf("Usuarios obtenidos de la base de datos: %v", usuarios)
+
 	c.JSON(http.StatusOK, usuarios)
 }
-
 // ActualizarUsuario actualiza los datos de un usuario existente
 func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
 	var usuario Usuario
