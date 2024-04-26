@@ -61,8 +61,10 @@ func main() {
 	router.POST("/crear_usuario", usuarioHandler.CrearUsuario)
 	router.GET("/listar_usuarios", usuarioHandler.ListarUsuarios)
 	router.PUT("/actualizar_usuario", usuarioHandler.ActualizarUsuario)
-	router.DELETE("/eliminar_usuario", usuarioHandler.EliminarUsuario)
+	router.DELETE("/eliminar_usuario/:id", usuarioHandler.EliminarUsuario)
 	router.POST("/verificar_credenciales", usuarioHandler.VerificarCredenciales)
+	router.POST("/obtenerUsuarioByID/:id", usuarioHandler.ObtenerUsuarioByID)
+
 
 	// Rutas de Gin para clientes
 	clienteHandler := clientes.NewClienteHandler(db)

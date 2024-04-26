@@ -15,10 +15,17 @@ import RouteReportPage from './views/RouteReport-Page.vue';
 import ProfitReportPage from './views/ProfitReport-Page.vue';
 import CustomerReportPage from './views/CustomerReport-Page.vue';
 import PopularRoutesReportPage from './views/PopularRoutesReport-Page.vue';
-import AdminReportsPage from "@/views/AdminReports-Page.vue";
-import ListarUsuariosPage from "@/views/ListarUsuarios-Page.vue"; // Importa el componente ListarUsuariosPage
-import ListarRutasPage from "@/views/ListarRutas-Page.vue";
-import ListarPuntosPage from "@/views/ListarPuntos-Page.vue";
+import AdminReportsPage from "./views/AdminReports-Page.vue";
+import ListarUsuariosPage from "./views/ListarUsuarios-Page.vue";
+import CrearUsuariosPage from "./views/CrearUsuarios-Page.vue";
+import ActualizarUsuariosPage from "./views/ActualizarUsuarios-Page.vue";
+import EliminarUsuariosPage from "./views/EliminarUsuarios-Page.vue";
+import ListarRutasPage from "./views/ListarRutas-Page.vue";
+import CrearRutasPage from "./views/CrearRutas-Page.vue";
+import EliminarRutasPage from "./views/EliminarRutas-Page.vue";
+import ListarPuntosPage from "./views/ListarPuntos-Page.vue";
+import CrearPuntosPage from "./views/CrearPuntos-Page.vue";
+import EliminarPuntosPage from "./views/EliminarPuntos-Page.vue";
 
 const routes = [
     {
@@ -77,7 +84,7 @@ const routes = [
         component: ListPackagesPage
     },
     {
-        path: '/recep/package-location',
+        path: '/recep/locations',
         name: 'PackageLocation',
         component: PackageLocationPage
     },
@@ -112,14 +119,49 @@ const routes = [
         component: ListarUsuariosPage // Agrega la ruta para ListarUsuariosPage
     },
     {
+        path: '/admin/users/crear',
+        name: 'CrearUsuarios',
+        component: CrearUsuariosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/users/actualizar',
+        name: 'ActualizarUsuarios',
+        component: ActualizarUsuariosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/users/eliminar',
+        name: 'EliminarUsuarios',
+        component: EliminarUsuariosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
         path: '/admin/routes/listar',
         name: 'ListarRutas',
         component: ListarRutasPage // Agrega la ruta para ListarUsuariosPage
     },
     {
+        path: '/admin/routes/crear',
+        name: 'CrearRutas',
+        component: CrearRutasPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/routes/eliminar',
+        name: 'EliminarRutas',
+        component: EliminarRutasPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
         path: '/admin/checkpoints/listar',
         name: 'ListarPuntosDeControl',
         component: ListarPuntosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/checkpoints/crear',
+        name: 'CrearPuntosDeControl',
+        component: CrearPuntosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/checkpoints/eliminar',
+        name: 'EliminarPuntosDeControl',
+        component: EliminarPuntosPage // Agrega la ruta para ListarUsuariosPage
     }
 ];
 

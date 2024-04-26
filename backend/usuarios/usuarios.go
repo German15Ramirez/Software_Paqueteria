@@ -3,6 +3,7 @@ package usuarios
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -33,7 +34,7 @@ func NewUsuarioHandler(db *sql.DB) *UsuarioHandler {
 func (h *UsuarioHandler) CrearUsuario(c *gin.Context) {
 	var usuario Usuario
 	if err := c.ShouldBindJSON(&usuario); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de usuario inválidos"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Datos de usuario inválidos: %v", err)})
 		return
 	}
 
@@ -47,7 +48,7 @@ func (h *UsuarioHandler) CrearUsuario(c *gin.Context) {
 		usuario.ID, usuario.Nombre, usuario.Correo, usuario.Telefono, usuario.Contraseña, usuario.Rol)
 	if err != nil {
 		log.Printf("Error al ejecutar la consulta SQL: %v", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al crear el usuario"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Error al crear el usuario: %v", err)})
 		return
 	}
 
@@ -91,12 +92,14 @@ func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
 	// Decodificar el cuerpo JSON de la solicitud en la estructura del usuario
 	if err := c.ShouldBindJSON(&usuario); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de usuario inválidos"})
+		fmt.Println("Error al decodificar los datos del usuario:", err) // Mensaje de consola
 		return
 	}
 
 	// Verificar si el usuario que se intenta actualizar existe
 	if !h.existeUsuarioID(usuario.ID) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "El usuario no existe"})
+		fmt.Println("El usuario que se intenta actualizar no existe") // Mensaje de consola
 		return
 	}
 
@@ -106,11 +109,13 @@ func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
 	if err != nil {
 		log.Printf("Error al ejecutar la consulta SQL de actualización: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al actualizar el usuario"})
+		fmt.Println("Error al ejecutar la consulta SQL de actualización:", err) // Mensaje de consola
 		return
 	}
 
 	// Responder con un mensaje de éxito
 	c.JSON(http.StatusOK, gin.H{"message": "Usuario actualizado exitosamente"})
+	fmt.Println("Usuario actualizado exitosamente") // Mensaje de consola
 }
 
 // EliminarUsuario elimina un usuario existente
@@ -186,4 +191,26 @@ func (h *UsuarioHandler) VerificarCredencialesBD(c *gin.Context, usuarioID int, 
 		return "", err // Otro error
 	}
 	return rol, nil
+}
+// ObtenerUsuarioByID obtiene un usuario por su ID
+func (h *UsuarioHandler) ObtenerUsuarioByID(c *gin.Context) {
+	idStr := c.Param("id")
+	if idStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Se requiere el parámetro 'id'"})
+		return
+	}
+
+	// Aquí iría la lógica para buscar el usuario en la base de datos por su ID
+	// Por ejemplo, podrías ejecutar una consulta SQL utilizando el ID proporcionado
+
+	// Ejemplo de consulta SQL para obtener un usuario por su ID
+	var usuario Usuario
+	err := h.db.QueryRow("SELECT usuario_id, nombre, correo, telefono, contraseña, rol FROM usuarios WHERE usuario_id = ?", idStr).Scan(&usuario.ID, &usuario.Nombre, &usuario.Correo, &usuario.Telefono, &usuario.Contraseña, &usuario.Rol)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al obtener el usuario"})
+		return
+	}
+
+	// Responder con los datos del usuario encontrado
+	c.JSON(http.StatusOK, usuario)
 }
