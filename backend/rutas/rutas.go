@@ -96,12 +96,18 @@ func (h *RutaHandler) ActualizarRuta(c *gin.Context) {
 
 	// Decodificar el cuerpo JSON de la solicitud en la estructura de la ruta
 	if err := c.ShouldBindJSON(&ruta); err != nil {
+		log.Printf("Error al decodificar el cuerpo JSON: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de ruta inválidos"})
 		return
 	}
 
+	// Agregar mensajes de depuración para conocer los datos que llegan
+	log.Printf("Datos recibidos para actualización - ID: %v, Destino: %v, TarifaOperacion: %v, CapacidadMaxima: %v",
+		ruta.ID, ruta.Destino, ruta.TarifaOperacion, ruta.CapacidadMaxima)
+
 	// Verificar si la ruta que se intenta actualizar existe
 	if !h.existeRutaID(ruta.ID) {
+		log.Printf("La ruta con ID %v no existe", ruta.ID)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "La ruta no existe"})
 		return
 	}

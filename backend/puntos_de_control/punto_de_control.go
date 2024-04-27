@@ -1,6 +1,7 @@
 package puntos_de_control
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -92,12 +93,14 @@ func (h *PuntoDeControlHandler) ActualizarPuntoDeControl(c *gin.Context) {
 
 	// Decodificar el cuerpo JSON de la solicitud en la estructura del punto de control
 	if err := c.ShouldBindJSON(&puntoDeControl); err != nil {
+		fmt.Println("Error al decodificar JSON:", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de punto de control inválidos"})
 		return
 	}
 
 	// Verificar si el punto de control que se intenta actualizar existe
 	if !h.existePuntoDeControlID(puntoDeControl.ID) {
+		fmt.Println("El punto de control no existe")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "El punto de control no existe"})
 		return
 	}
@@ -106,12 +109,13 @@ func (h *PuntoDeControlHandler) ActualizarPuntoDeControl(c *gin.Context) {
 	_, err := h.db.Exec("UPDATE puntos_de_control SET ruta_id=?, nombre=?, capacidad_cola=?, tarifa_operacional=? WHERE puntos_de_control_id=?",
 		puntoDeControl.RutaID, puntoDeControl.Nombre, puntoDeControl.CapacidadCola, puntoDeControl.TarifaOperacional, puntoDeControl.ID)
 	if err != nil {
-		log.Printf("Error al ejecutar la consulta SQL de actualización: %v", err)
+		fmt.Printf("Error al ejecutar la consulta SQL de actualización: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al actualizar el punto de control"})
 		return
 	}
 
 	// Responder con un mensaje de éxito
+	fmt.Println("Punto de control actualizado exitosamente")
 	c.JSON(http.StatusOK, gin.H{"message": "Punto de control actualizado exitosamente"})
 }
 // EliminarPuntoDeControl elimina un punto de control existente

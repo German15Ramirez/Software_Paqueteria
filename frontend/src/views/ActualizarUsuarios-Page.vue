@@ -1,34 +1,30 @@
 <template>
   <div class="container">
-    <h1>Actualizar Usuario</h1>
-    <form @submit.prevent="actualizarUsuario" class="user-update-form">
+    <h1>Editar Usuario</h1>
+    <form @submit.prevent="editarUsuario" class="user-form">
       <div class="form-group">
-        <label for="id">ID del Usuario</label>
-        <input type="number" id="id" v-model="usuarioID" required>
+        <label for="id">ID</label>
+        <input type="number" id="id" v-model="usuario.ID" required>
       </div>
       <div class="form-group">
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" v-model="nombre" required>
+        <input type="text" id="nombre" v-model="usuario.Nombre" required>
       </div>
       <div class="form-group">
-        <label for="correo">Correo Electrónico</label>
-        <input type="email" id="correo" v-model="correo" required>
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" v-model="usuario.Correo" required>
       </div>
       <div class="form-group">
         <label for="telefono">Teléfono</label>
-        <input type="number" id="telefono" v-model="telefono" required>
+        <input type="number" id="telefono" v-model="usuario.Telefono" required>
       </div>
       <div class="form-group">
         <label for="contraseña">Contraseña</label>
-        <input type="password" id="contraseña" v-model="contraseña" required>
+        <input type="password" id="contraseña" v-model="usuario.Contraseña" required>
       </div>
       <div class="form-group">
         <label for="rol">Rol</label>
-        <select id="rol" v-model="rol" required>
-          <option value="admin">Administrador</option>
-          <option value="user">Recepcionista</option>
-          <option value="admin">Operador</option>
-        </select>
+        <input type="text" id="rol" v-model="usuario.Rol" required>
       </div>
       <button type="submit" class="btn-submit">Actualizar Usuario</button>
     </form>
@@ -41,31 +37,39 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      usuarioID: 0,
-      nombre: '',
-      correo: '',
-      telefono: 0, // Cambiado a tipo entero (int)
-      contraseña: '',
-      rol: ''
+      usuario: {
+        ID: '',
+        Nombre: '',
+        Correo: '',
+        Telefono: '',
+        Contraseña: '',
+        Rol: ''
+      }
     }
   },
   methods: {
-    async actualizarUsuario() {
+    async editarUsuario() {
       try {
-        const response = await axios.put(`http://localhost:8080/actualizar_usuario`, {
-          usuarioID: this.usuarioID,
-          nombre: this.nombre,
-          correo: this.correo,
-          telefono: parseInt(this.telefono), // Convertir a entero antes de enviar al servidor
-          contraseña: this.contraseña,
-          rol: this.rol
-        });
-        console.log(response.data.message); // Mostrar mensaje de éxito en la consola
-        // También podrías mostrar un mensaje de éxito en la interfaz
+        const response = await axios.put('http://localhost:8080/actualizar_usuario', this.usuario);
+        console.log(response.data);
+        if (response.data.message) {
+          alert(response.data.message);
+          this.limpiarCampos();
+        }
       } catch (error) {
         console.error(error);
-        // Manejar el error y mostrar un mensaje al usuario si la actualización falla
+        alert('Error al actualizar el usuario');
       }
+    },
+    limpiarCampos() {
+      this.usuario = {
+        ID: '',
+        Nombre: '',
+        Correo: '',
+        Telefono: '',
+        Contraseña: '',
+        Rol: ''
+      };
     }
   }
 }
@@ -91,7 +95,7 @@ label {
   font-weight: bold;
 }
 
-input, select {
+input {
   width: 100%;
   padding: 0.7em;
   border: 1px solid #ccc;
@@ -99,7 +103,6 @@ input, select {
 }
 
 button.btn-submit {
-  margin-top: 1em;
   padding: 0.7em 1em;
   background-color: #007BFF;
   color: white;

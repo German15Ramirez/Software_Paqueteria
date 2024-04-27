@@ -23,9 +23,11 @@ import EliminarUsuariosPage from "./views/EliminarUsuarios-Page.vue";
 import ListarRutasPage from "./views/ListarRutas-Page.vue";
 import CrearRutasPage from "./views/CrearRutas-Page.vue";
 import EliminarRutasPage from "./views/EliminarRutas-Page.vue";
+import ActualizarRutasPage from "./views/ActualizarRutas-Page.vue";
 import ListarPuntosPage from "./views/ListarPuntos-Page.vue";
 import CrearPuntosPage from "./views/CrearPuntos-Page.vue";
 import EliminarPuntosPage from "./views/EliminarPuntos-Page.vue";
+import ActualizarPuntosPage from "./views/ActualizarPuntos-Page.vue";
 
 const routes = [
     {
@@ -149,6 +151,11 @@ const routes = [
         component: EliminarRutasPage // Agrega la ruta para ListarUsuariosPage
     },
     {
+        path: '/admin/routes/actualizar',
+        name: 'ActualizarRutas',
+        component: ActualizarRutasPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
         path: '/admin/checkpoints/listar',
         name: 'ListarPuntosDeControl',
         component: ListarPuntosPage // Agrega la ruta para ListarUsuariosPage
@@ -162,6 +169,11 @@ const routes = [
         path: '/admin/checkpoints/eliminar',
         name: 'EliminarPuntosDeControl',
         component: EliminarPuntosPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/checkpoints/actualizar',
+        name: 'ActualizarPuntosDeControl',
+        component: ActualizarPuntosPage // Agrega la ruta para ListarUsuariosPage
     }
 ];
 

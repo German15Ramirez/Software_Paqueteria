@@ -92,14 +92,14 @@ func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
 	// Decodificar el cuerpo JSON de la solicitud en la estructura del usuario
 	if err := c.ShouldBindJSON(&usuario); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de usuario inválidos"})
-		fmt.Println("Error al decodificar los datos del usuario:", err) // Mensaje de consola
+		log.Println("Error al decodificar los datos del usuario:", err) // Mensaje de registro
 		return
 	}
 
 	// Verificar si el usuario que se intenta actualizar existe
 	if !h.existeUsuarioID(usuario.ID) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "El usuario no existe"})
-		fmt.Println("El usuario que se intenta actualizar no existe") // Mensaje de consola
+		log.Println("El usuario que se intenta actualizar no existe") // Mensaje de registro
 		return
 	}
 
@@ -109,13 +109,13 @@ func (h *UsuarioHandler) ActualizarUsuario(c *gin.Context) {
 	if err != nil {
 		log.Printf("Error al ejecutar la consulta SQL de actualización: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al actualizar el usuario"})
-		fmt.Println("Error al ejecutar la consulta SQL de actualización:", err) // Mensaje de consola
+		log.Println("Error al ejecutar la consulta SQL de actualización:", err) // Mensaje de registro
 		return
 	}
 
 	// Responder con un mensaje de éxito
 	c.JSON(http.StatusOK, gin.H{"message": "Usuario actualizado exitosamente"})
-	fmt.Println("Usuario actualizado exitosamente") // Mensaje de consola
+	log.Println("Usuario actualizado exitosamente") // Mensaje de registro
 }
 
 // EliminarUsuario elimina un usuario existente
