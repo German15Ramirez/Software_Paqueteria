@@ -58,7 +58,7 @@ export default {
 
 .table-container {
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 5px;
   padding: 20px;
   margin-top: 20px;
@@ -71,7 +71,7 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   padding: 12px;
 }
 

@@ -5,6 +5,7 @@ import AboutPage from './views/About-Page.vue';
 import AdministradorPrincipalPage from './views/AdministradorPrincipal-Page.vue';
 import RecepcionistaPrincipalPage from './views/RecepcionistaPrincipal-Page.vue';
 import OperadorPrincipalPage from './views/OperadorPrincipal-Page.vue';
+import ProcesosPage from './views/ProcessPackages-Page.vue';
 import AdminUsersPage from './views/AdminUsers-Page.vue';
 import AdminRoutesPage from './views/AdminRoutes-Page.vue';
 import AdminCheckpointsPage from './views/AdminCheckpoints-Page.vue';
@@ -49,6 +50,16 @@ const routes = [
         path: '/OperadorPrincipal-Page',
         name: 'OperadorPrincipal',
         component: OperadorPrincipalPage
+    },
+    {
+        path: '/oper/process',
+        name: 'ProcesosOperador',
+        component: ProcesosPage
+    },
+    {
+        path: '/RecepcionistaPrincipal-Page',
+        name: 'RecepcionistaPrincipal',
+        component: RecepcionistaPrincipalPage
     },
     {
         path: '/RecepcionistaPrincipal-Page',

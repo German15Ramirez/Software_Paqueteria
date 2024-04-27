@@ -27,11 +27,11 @@ export default {
   align-items: center;
 }
 h2 {
-  font-size: 2em;
+  font-size: 4em;
   margin-bottom: 10px;
 }
 p {
-  font-size: 1.2em;
+  font-size: 1.7em;
   margin-bottom: 15px;
 }
 img {

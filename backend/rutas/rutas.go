@@ -191,8 +191,5 @@ func (h *RutaHandler) ActualizarTarifaGlobal(c *gin.Context) {
 		return
 	}
 
-	// Aquí iría la lógica para actualizar la tarifa global de la ruta con el ID dado
-	// Actualización en la base de datos, etc.
-
 	c.JSON(http.StatusOK, gin.H{"message": "Tarifa global actualizada exitosamente"})
 }

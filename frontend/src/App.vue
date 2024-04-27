@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <!-- Contenido de la página principal -->
     <router-view></router-view>
   </div>
 </template>
@@ -15,14 +14,12 @@ export default {
 </script>
 
 <style>
-/* Estilos para el cuerpo de la página */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-/* Estilos para el contenedor principal */
 .app-container {
   display: flex;
   flex-direction: column;

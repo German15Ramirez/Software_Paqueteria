@@ -77,6 +77,7 @@ func main() {
 	paqueteHandler := paquetes.NewPaqueteHandler(db)
 	router.GET("/paquetes/:id/localizacion", paqueteHandler.ObtenerLocalizacionPaquete)
 	router.GET("/listar_paquetes", paqueteHandler.ListarPaquetesPorDestino)
+	router.GET("/obtener_reporte_rutas", paqueteHandler.ReporteRutas)
 
 	// Iniciar el servidor Gin en el puerto 8080
 	if err := router.Run(":8080"); err != nil {

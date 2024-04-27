@@ -15,12 +15,10 @@
 </template>
 
 <script>
-export default {
-}
+
 </script>
 
 <style>
-/* Estilos para la página de inicio */
 .home-container {
   display: flex;
   flex-direction: column;

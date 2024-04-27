@@ -95,3 +95,59 @@ func (h *PaqueteHandler) ListarPaquetesPorDestino(c *gin.Context) {
 
 	c.JSON(http.StatusOK, paquetes)
 }
+// obtenerListaDePaquetes obtiene la lista de paquetes desde la base de datos.
+func (h *PaqueteHandler) obtenerListaDePaquetes() ([]Paquete, error) {
+	fmt.Println("Obteniendo la lista de paquetes desde la base de datos...")
+	rows, err := h.db.Query("SELECT paquete_id, cliente_id, peso_libras, destino, fecha_ingreso, fecha_salida, estado FROM paquetes")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var paquetes []Paquete
+	for rows.Next() {
+		var paquete Paquete
+		if err := rows.Scan(&paquete.ID, &paquete.ClienteID, &paquete.PesoLibras, &paquete.Destino, &paquete.FechaIngreso, &paquete.FechaSalida, &paquete.Estado); err != nil {
+			return nil, err
+		}
+		paquetes = append(paquetes, paquete)
+	}
+
+	// Agregar mensaje para mostrar la cantidad de paquetes obtenidos
+	fmt.Println("Se han obtenido", len(paquetes), "paquetes desde la base de datos")
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return paquetes, nil
+}
+// ReporteRutas genera un reporte de las rutas y la cantidad de paquetes en cada estado por ruta.
+func (h *PaqueteHandler) ReporteRutas(c *gin.Context) {
+	// Obtener la lista de paquetes
+	paquetes, err := h.obtenerListaDePaquetes()
+	if err != nil {
+		log.Printf("Error al obtener la lista de paquetes: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al obtener la lista de paquetes"})
+		return
+	}
+
+	// Mapas para almacenar la cantidad de paquetes por estado para cada ruta
+	paquetesEnRutaPorRuta := make(map[string]int)
+	paquetesEntregadosPorRuta := make(map[string]int)
+
+	// Iterar sobre los paquetes y contar la cantidad por estado para cada ruta
+	for _, paquete := range paquetes {
+		if paquete.Estado == "En Ruta" {
+			paquetesEnRutaPorRuta[paquete.Ruta]++
+		} else if paquete.Estado == "Entregado" {
+			paquetesEntregadosPorRuta[paquete.Ruta]++
+		}
+	}
+	responseData := map[string]interface{}{
+		"paquetesEnRutaPorRuta":    paquetesEnRutaPorRuta,
+		"paquetesEntregadosPorRuta": paquetesEntregadosPorRuta,
+	}
+
+	c.JSON(http.StatusOK, responseData)
+}

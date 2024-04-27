@@ -1,10 +1,10 @@
 <template>
-  <div class="admin-container">
-    <div class="header">
-      <h1>Administrar Puntos de Control</h1>
+  <div class="recep-container">
+    <div class="header" style="background-color: #212121; padding: 20px; border-radius: 5px; text-align: center;">
+      <h1 style="font-size: 1.8em; color: #fff; margin: 0;">Administrar Puntos de Control</h1>
     </div>
 
-    <div class="options">
+    <div class="options" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
       <h2 class="option-title">Opciones:</h2>
       <ul>
         <li><router-link to="/admin/checkpoints/crear">Crear Punto de Control</router-link></li>
@@ -17,13 +17,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
 
-    };
-  }
-}
 </script>
 
 <style scoped>

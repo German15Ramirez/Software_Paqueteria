@@ -199,11 +199,6 @@ func (h *UsuarioHandler) ObtenerUsuarioByID(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Se requiere el parámetro 'id'"})
 		return
 	}
-
-	// Aquí iría la lógica para buscar el usuario en la base de datos por su ID
-	// Por ejemplo, podrías ejecutar una consulta SQL utilizando el ID proporcionado
-
-	// Ejemplo de consulta SQL para obtener un usuario por su ID
 	var usuario Usuario
 	err := h.db.QueryRow("SELECT usuario_id, nombre, correo, telefono, contraseña, rol FROM usuarios WHERE usuario_id = ?", idStr).Scan(&usuario.ID, &usuario.Nombre, &usuario.Correo, &usuario.Telefono, &usuario.Contraseña, &usuario.Rol)
 	if err != nil {

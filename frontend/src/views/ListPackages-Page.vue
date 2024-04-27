@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Listar Paquetes</h1>
+  <div style="background-color: #f2f2f2; padding: 20px; border-radius: 5px;">
+    <h1 style="background-color: #212121; color: #fff; padding: 10px; border-radius: 5px;">Listar Paquetes</h1>
     <div class="search-container">
       <input type="text" v-model="destino" placeholder="Ingrese el destino">
       <button @click="buscarPaquetes">Buscar</button>
@@ -87,7 +87,7 @@ export default {
 }
 
 .table-container {
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   background-color: #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -100,7 +100,7 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   padding: 8px;
 }
 

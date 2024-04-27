@@ -74,7 +74,6 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos específicos del componente Login */
 .login-container {
   display: flex;
   flex-direction: column;

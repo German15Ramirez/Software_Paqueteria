@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Localizar Paquete</h1>
+    <h1 style="background-color: #212121; color: #fff; padding: 10px; border-radius: 5px;">Localizar Paquete</h1>
     <form @submit.prevent="obtenerLocalizacion" class="package-location-form">
       <div class="form-group">
         <label for="id">ID del Paquete</label>
@@ -104,7 +104,7 @@ button.btn-submit {
 
 .table-container {
   margin-top: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 5px;
 }
 
@@ -114,7 +114,7 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   padding: 8px;
 }
 

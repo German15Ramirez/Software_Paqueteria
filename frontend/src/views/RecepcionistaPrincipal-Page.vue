@@ -1,10 +1,9 @@
 <template>
   <div class="recep-container">
-    <div class="header">
-      <h1>Bienvenido de nuevo Recepcionista</h1>
+    <div class="header" style="background-color: #212121; padding: 20px; border-radius: 5px; text-align: center;">
+      <h1 style="font-size: 1.8em; color: #fff; margin: 0;">Bienvenido de nuevo Recepcionista</h1>
     </div>
-
-    <div class="options">
+    <div class="options" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
       <h2 class="option-title">Opciones de recepcionista:</h2>
       <ul>
         <li><router-link to="/recep/packages">Listar paquetes</router-link></li>
@@ -15,18 +14,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      recepName: '' // Aquí se almacenará el nombre del recepcionista obtenido de la conexión SQL
-    };
-  },
-  mounted() {
-    // Aquí puedes realizar una consulta SQL para obtener el nombre del recepcionista
-    // Ejemplo: this.recepName = consultarNombreRecepcionista();
-    this.recepName = "Recepcionista"; // Simulando la obtención del nombre del recepcionista
-  }
-}
+
 </script>
 
 <style scoped>
