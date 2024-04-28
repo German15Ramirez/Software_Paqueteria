@@ -11,6 +11,7 @@ import AdminRoutesPage from './views/AdminRoutes-Page.vue';
 import AdminCheckpointsPage from './views/AdminCheckpoints-Page.vue';
 import ListPackagesPage from './views/ListPackages-Page.vue';
 import PackageLocationPage from './views/PackageLocation-Page.vue';
+import PackageStatusPage from './views/PackageStatus-Page.vue';
 import ProcessPackagesPage from './views/ProcessPackages-Page.vue';
 import RouteReportPage from './views/RouteReport-Page.vue';
 import ProfitReportPage from './views/ProfitReport-Page.vue';
@@ -100,6 +101,11 @@ const routes = [
         path: '/recep/locations',
         name: 'PackageLocation',
         component: PackageLocationPage
+    },
+    {
+        path: '/recep/status',
+        name: 'PackageStatus',
+        component: PackageStatusPage
     },
     {
         path: '/recep/administrar_clientes',

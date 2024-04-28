@@ -8,6 +8,7 @@
       <ul>
         <li><router-link to="/recep/packages">Listar paquetes</router-link></li>
         <li><router-link to="/recep/locations">Localización de paquetes</router-link></li>
+        <li><router-link to="/recep/status">Estado de paquetes</router-link></li>
         <li><router-link to="/recep/administrar_clientes">Administrar Clientes</router-link></li>
       </ul>
     </div>
