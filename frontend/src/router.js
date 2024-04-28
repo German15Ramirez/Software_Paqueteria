@@ -17,6 +17,11 @@ import ProfitReportPage from './views/ProfitReport-Page.vue';
 import CustomerReportPage from './views/CustomerReport-Page.vue';
 import PopularRoutesReportPage from './views/PopularRoutesReport-Page.vue';
 import AdminReportsPage from "./views/AdminReports-Page.vue";
+import AdminClientesPage from "./views/AdminClientes-Page.vue";
+import CrearClientesPage from "./views/CrearClientes-Page.vue";
+import ActualizarClientesPage from "./views/ActualizarClientes-Page.vue";
+import ListarClientesPage from "./views/ListarClientes-Page.vue";
+import EliminarClientesPage from "./views/EliminarClientes-Page.vue";
 import ListarUsuariosPage from "./views/ListarUsuarios-Page.vue";
 import CrearUsuariosPage from "./views/CrearUsuarios-Page.vue";
 import ActualizarUsuariosPage from "./views/ActualizarUsuarios-Page.vue";
@@ -62,11 +67,6 @@ const routes = [
         component: RecepcionistaPrincipalPage
     },
     {
-        path: '/RecepcionistaPrincipal-Page',
-        name: 'RecepcionistaPrincipal',
-        component: RecepcionistaPrincipalPage
-    },
-    {
         path: '/AdministradorPrincipal-Page',
         name: 'AdministradorPrincipal',
         component: AdministradorPrincipalPage
@@ -100,6 +100,31 @@ const routes = [
         path: '/recep/locations',
         name: 'PackageLocation',
         component: PackageLocationPage
+    },
+    {
+        path: '/recep/administrar_clientes',
+        name: 'AdminClientes',
+        component: AdminClientesPage
+    },
+    {
+        path: '/recep/clientes/listar',
+        name: 'ListarClientes',
+        component: ListarClientesPage
+    },
+    {
+        path: '/recep/clientes/crear',
+        name: 'CrearClientes',
+        component: CrearClientesPage
+    },
+    {
+        path: '/recep/clientes/actualizar',
+        name: 'ActualizarClientes',
+        component: ActualizarClientesPage
+    },
+    {
+        path: '/recep/clientes/eliminar',
+        name: 'EliminarClientes',
+        component: EliminarClientesPage
     },
     {
         path: '/operator/process-packages',

@@ -1,14 +1,16 @@
 <template>
   <div class="recep-container">
     <div class="header" style="background-color: #212121; padding: 20px; border-radius: 5px; text-align: center;">
-      <h1 style="font-size: 1.8em; color: #fff; margin: 0;">Bienvenido de nuevo Recepcionista</h1>
+      <h1 style="font-size: 1.8em; color: #fff; margin: 0;">Administrar Clientes</h1>
     </div>
+
     <div class="options" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
-      <h2 class="option-title">Opciones de recepcionista:</h2>
+      <h2 class="option-title">Opciones:</h2>
       <ul>
-        <li><router-link to="/recep/packages">Listar paquetes</router-link></li>
-        <li><router-link to="/recep/locations">Localización de paquetes</router-link></li>
-        <li><router-link to="/recep/administrar_clientes">Administrar Clientes</router-link></li>
+        <li><router-link to="/recep/clientes/listar">Listar Clientes</router-link></li>
+        <li><router-link to="/recep/clientes/crear">Crear Cliente</router-link></li>
+        <li><router-link to="/recep/clientes/actualizar">Actualizar Cliente</router-link></li>
+        <li><router-link to="/recep/clientes/eliminar">Eliminar Cliente</router-link></li>
       </ul>
     </div>
   </div>
@@ -19,7 +21,7 @@
 </script>
 
 <style scoped>
-.recep-container {
+.admin-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
@@ -65,5 +67,4 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
 </style>
