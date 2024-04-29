@@ -27,6 +27,7 @@ import ListarUsuariosPage from "./views/ListarUsuarios-Page.vue";
 import CrearUsuariosPage from "./views/CrearUsuarios-Page.vue";
 import ActualizarUsuariosPage from "./views/ActualizarUsuarios-Page.vue";
 import EliminarUsuariosPage from "./views/EliminarUsuarios-Page.vue";
+import TarifaGlobalPage from "./views/TarifaGlobal-Page.vue";
 import ListarRutasPage from "./views/ListarRutas-Page.vue";
 import CrearRutasPage from "./views/CrearRutas-Page.vue";
 import EliminarRutasPage from "./views/EliminarRutas-Page.vue";
@@ -196,6 +197,11 @@ const routes = [
         path: '/admin/routes/actualizar',
         name: 'ActualizarRutas',
         component: ActualizarRutasPage // Agrega la ruta para ListarUsuariosPage
+    },
+    {
+        path: '/admin/routes/establecer_tarifa_global',
+        name: 'EstablecerTarifaGlobal',
+        component: TarifaGlobalPage // Agrega la ruta para ListarUsuariosPage
     },
     {
         path: '/admin/checkpoints/listar',

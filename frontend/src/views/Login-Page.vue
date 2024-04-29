@@ -1,16 +1,19 @@
 <template>
-  <div class="login-container">
+  <div class="container">
     <h1>Iniciar Sesión</h1>
     <form @submit.prevent="login" class="login-form">
       <div class="form-group">
-        <label for="usuarioId">ID de Usuario:</label>
-        <input type="text" id="usuarioId" v-model="userId" required>
+        <label for="userId">Usuario:</label>
+        <input type="text" id="userId" v-model="userId" required>
       </div>
       <div class="form-group">
         <label for="password">Contraseña:</label>
-        <input type="password" id="password" v-model="password" required>
+        <div class="password-input">
+          <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password" required>
+          <button @click.prevent="togglePasswordVisibility">{{ showPassword ? 'Ocultar' : 'Mostrar' }}</button>
+        </div>
       </div>
-      <button type="submit" class="submit-button">Iniciar Sesión</button>
+      <button type="submit" class="btn-submit">Iniciar Sesión</button>
       <p v-if="error" class="error-message">{{ error }}</p>
     </form>
   </div>
@@ -24,33 +27,22 @@ export default {
     return {
       userId: '',
       password: '',
-      error: ''
+      error: '',
+      showPassword: false
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
     async login() {
+      if (!this.userId || !this.password) {
+        this.error = 'Por favor, completa todos los campos.';
+        return;
+      }
       try {
-        if (!this.userId || !this.password) {
-          this.error = 'Por favor, completa todos los campos.';
-          return;
-        }
-
         const response = await this.verificarCredenciales();
-
-        switch (response.rol) {
-          case 'Administrador':
-            this.$router.push('/AdministradorPrincipal-Page');
-            break;
-          case 'Recepcionista':
-            this.$router.push('/RecepcionistaPrincipal-Page');
-            break;
-          case 'Operador':
-            this.$router.push('/OperadorPrincipal-Page');
-            break;
-          default:
-            this.error = 'Rol desconocido';
-            console.error('Rol desconocido:', response.rol);
-        }
+        this.handleLoginResponse(response);
       } catch (error) {
         this.error = 'Error al iniciar sesión. Por favor, intenta de nuevo.';
         console.error('Error al iniciar sesión:', error);
@@ -59,14 +51,29 @@ export default {
     async verificarCredenciales() {
       try {
         const response = await axios.post('http://localhost:8080/verificar_credenciales', {
-          usuario_id: parseInt(this.userId), // Convertir a entero
-          contraseña: this.password // Mantener como cadena
+          usuario_id: parseInt(this.userId),
+          contraseña: this.password
         });
-
         return response.data;
       } catch (error) {
         console.error('Error al verificar las credenciales:', error);
         throw error;
+      }
+    },
+    handleLoginResponse(response) {
+      switch (response.rol) {
+        case 'Administrador':
+          this.$router.push('/AdministradorPrincipal-Page');
+          break;
+        case 'Recepcionista':
+          this.$router.push('/RecepcionistaPrincipal-Page');
+          break;
+        case 'Operador':
+          this.$router.push('/OperadorPrincipal-Page');
+          break;
+        default:
+          this.error = 'Rol desconocido';
+          console.error('Rol desconocido:', response.rol);
       }
     }
   }
@@ -74,70 +81,39 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #333;
-}
-
-.login-form {
+.container {
   max-width: 400px;
-  width: 80%;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #555;
+  border: 1px solid #e0e0e0;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  background-color: #444;
-}
-
-h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #fff;
+  background-color: #f9f9f9;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 1.5em;
 }
 
 label {
-  font-size: 1.2em;
-  margin-bottom: 5px;
-  color: #fff;
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
 }
 
 input {
-  padding: 10px;
-  font-size: 1em;
   width: 100%;
-  border: 1px solid #555;
-  border-radius: 3px;
-  background-color: #666;
-  color: #fff;
+  padding: 0.7em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.submit-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #42b983;
-  color: #fff;
+button.btn-submit {
+  margin-top: 1em;
+  padding: 0.7em 1em;
+  background-color: #14b642;
+  color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-  background-color: #3aa872;
-}
-
-.error-message {
-  color: #ff0000;
-  margin-top: 10px;
 }
 </style>

@@ -51,6 +51,9 @@ func main() {
 	router.GET("/listar_rutas", rutaHandler.ListarRutas)
 	router.PUT("/actualizar_ruta", rutaHandler.ActualizarRuta)
 	router.DELETE("/eliminar_ruta/:id", rutaHandler.EliminarRuta)
+	router.POST("/tarifa-global", rutaHandler.SetTarifaGlobalHandler)
+	router.GET("/tarifa-global", rutaHandler.GetTarifaGlobalHandler)
+
 
 	//especie de modificacion de CRUD de tarifas
 	router.GET("/rutas/:id/tarifa_operacional", rutaHandler.ObtenerTarifaOperacion)

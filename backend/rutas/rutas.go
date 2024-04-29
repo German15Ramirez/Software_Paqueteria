@@ -1,13 +1,13 @@
 package rutas
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
-
 type Ruta struct {
 	ID              int
 	Destino         string
@@ -15,17 +15,15 @@ type Ruta struct {
 	CapacidadMaxima int
 }
 
-// RutaHandler maneja las operaciones relacionadas con las rutas
 type RutaHandler struct {
-	db *sql.DB
+	db           *sql.DB
+	tarifaGlobal float64 // Tarifa global
 }
 
-// NewRutaHandler crea un nuevo manejador de rutas
 func NewRutaHandler(db *sql.DB) *RutaHandler {
 	return &RutaHandler{db: db}
 }
 
-// CrearRuta crea una nueva ruta
 func (h *RutaHandler) CrearRuta(c *gin.Context) {
 	var ruta Ruta
 	if err := c.ShouldBindJSON(&ruta); err != nil {
@@ -33,13 +31,11 @@ func (h *RutaHandler) CrearRuta(c *gin.Context) {
 		return
 	}
 
-	// Verificar si se proporcionó un valor para ruta_id
 	if ruta.ID == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Se requiere un valor para ruta_id"})
 		return
 	}
 
-	// Insertar los datos de la ruta en la base de datos
 	_, err := h.db.Exec("INSERT INTO rutas (ruta_id, destino, tarifa_operacion, capacidad_maxima) VALUES (?, ?, ?, ?)",
 		ruta.ID, ruta.Destino, ruta.TarifaOperacion, ruta.CapacidadMaxima)
 	if err != nil {
@@ -51,7 +47,6 @@ func (h *RutaHandler) CrearRuta(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Ruta creada exitosamente"})
 }
 
-// ListarRutas lista todas las rutas
 func (h *RutaHandler) ListarRutas(c *gin.Context) {
 	rows, err := h.db.Query("SELECT ruta_id, destino, tarifa_operacion, capacidad_maxima FROM rutas")
 	if err != nil {
@@ -78,7 +73,6 @@ func (h *RutaHandler) ListarRutas(c *gin.Context) {
 	c.JSON(http.StatusOK, rutas)
 }
 
-// existeRutaID verifica si ya existe una ruta con el mismo ID en la base de datos
 func (h *RutaHandler) existeRutaID(id int) bool {
 	var count int
 	err := h.db.QueryRow("SELECT COUNT(*) FROM rutas WHERE ruta_id = ?", id).Scan(&count)
@@ -89,30 +83,23 @@ func (h *RutaHandler) existeRutaID(id int) bool {
 	return count > 0
 }
 
-// ActualizarRuta actualiza los datos de una ruta existente
 func (h *RutaHandler) ActualizarRuta(c *gin.Context) {
-	// Estructura para almacenar los datos actualizados de la ruta
 	var ruta Ruta
-
-	// Decodificar el cuerpo JSON de la solicitud en la estructura de la ruta
 	if err := c.ShouldBindJSON(&ruta); err != nil {
 		log.Printf("Error al decodificar el cuerpo JSON: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de ruta inválidos"})
 		return
 	}
 
-	// Agregar mensajes de depuración para conocer los datos que llegan
 	log.Printf("Datos recibidos para actualización - ID: %v, Destino: %v, TarifaOperacion: %v, CapacidadMaxima: %v",
 		ruta.ID, ruta.Destino, ruta.TarifaOperacion, ruta.CapacidadMaxima)
 
-	// Verificar si la ruta que se intenta actualizar existe
 	if !h.existeRutaID(ruta.ID) {
 		log.Printf("La ruta con ID %v no existe", ruta.ID)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "La ruta no existe"})
 		return
 	}
 
-	// Actualizar los datos de la ruta en la base de datos
 	_, err := h.db.Exec("UPDATE rutas SET destino=?, tarifa_operacion=?, capacidad_maxima=? WHERE ruta_id=?",
 		ruta.Destino, ruta.TarifaOperacion, ruta.CapacidadMaxima, ruta.ID)
 	if err != nil {
@@ -121,13 +108,10 @@ func (h *RutaHandler) ActualizarRuta(c *gin.Context) {
 		return
 	}
 
-	// Responder con un mensaje de éxito
 	c.JSON(http.StatusOK, gin.H{"message": "Ruta actualizada exitosamente"})
 }
 
-// EliminarRuta elimina una ruta existente
 func (h *RutaHandler) EliminarRuta(c *gin.Context) {
-	// Obtener el ID de la ruta de los parámetros de la ruta
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -135,13 +119,11 @@ func (h *RutaHandler) EliminarRuta(c *gin.Context) {
 		return
 	}
 
-	// Verificar si la ruta que se intenta eliminar existe
 	if !h.existeRutaID(id) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "La ruta no existe"})
 		return
 	}
 
-	// Eliminar la ruta de la base de datos
 	_, err = h.db.Exec("DELETE FROM rutas WHERE ruta_id = ?", id)
 	if err != nil {
 		log.Printf("Error al ejecutar la consulta SQL de eliminación: %v", err)
@@ -149,7 +131,6 @@ func (h *RutaHandler) EliminarRuta(c *gin.Context) {
 		return
 	}
 
-	// Responder con un mensaje de éxito
 	c.JSON(http.StatusOK, gin.H{"message": "Ruta eliminada exitosamente"})
 }
 
@@ -161,7 +142,6 @@ func (h *RutaHandler) ObtenerTarifaOperacion(c *gin.Context) {
 		return
 	}
 
-	// Consultar la base de datos para obtener la tarifa de operación de la ruta con el ID dado
 	var tarifaOperacion float64
 	err = h.db.QueryRow("SELECT tarifa_operacion FROM rutas WHERE ruta_id = ?", id).Scan(&tarifaOperacion)
 	if err != nil {
@@ -176,7 +156,6 @@ func (h *RutaHandler) ObtenerTarifaOperacion(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"tarifa_operacion": tarifaOperacion})
 }
 
-// ActualizarTarifaGlobal actualiza la tarifa global de una ruta.
 func (h *RutaHandler) ActualizarTarifaGlobal(c *gin.Context) {
 	idStr := c.Param("id")
 	_, err := strconv.Atoi(idStr)
@@ -192,4 +171,40 @@ func (h *RutaHandler) ActualizarTarifaGlobal(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Tarifa global actualizada exitosamente"})
+}
+
+// SetTarifaGlobalHandler es un controlador para establecer la tarifa global
+// SetTarifaGlobalHandler es un controlador para establecer la tarifa global
+func (h *RutaHandler) SetTarifaGlobalHandler(c *gin.Context) {
+	var body struct {
+		Tarifa float64 `json:"tarifa"`
+	}
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de tarifa inválidos"})
+		return
+	}
+
+	h.SetTarifaGlobal(body.Tarifa)
+
+	c.JSON(http.StatusOK, gin.H{"message": fmt.Sprintf("Tarifa global establecida: %.2f", body.Tarifa)})
+}
+
+// GetTarifaGlobalHandler es un controlador para obtener la tarifa global
+func (h *RutaHandler) GetTarifaGlobalHandler(c *gin.Context) {
+	tarifa := h.ObtenerTarifaGlobal()
+	log.Printf("Tarifa global obtenida: %.2f", tarifa)
+	c.JSON(http.StatusOK, gin.H{"tarifa_global": tarifa})
+}
+
+// SetTarifaGlobal establece la tarifa global y la guarda en la variable tarifaGlobal
+func (h *RutaHandler) SetTarifaGlobal(tarifa float64) {
+	h.tarifaGlobal = tarifa
+	log.Printf("Tarifa global establecida: %.2f", tarifa)
+}
+
+// ObtenerTarifaGlobal devuelve la tarifa global almacenada en la variable tarifaGlobal
+func (h *RutaHandler) ObtenerTarifaGlobal() float64 {
+	tarifa := h.tarifaGlobal
+	log.Printf("Tarifa global obtenida: %.2f", tarifa)
+	return tarifa
 }

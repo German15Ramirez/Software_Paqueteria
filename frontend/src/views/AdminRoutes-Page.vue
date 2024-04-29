@@ -11,7 +11,7 @@
         <li><router-link to="/admin/routes/listar">Listar Rutas</router-link></li>
         <li><router-link to="/admin/routes/actualizar">Actualizar Ruta</router-link></li>
         <li><router-link to="/admin/routes/eliminar">Eliminar Ruta</router-link></li>
-        <li><router-link to="/admin/routes/tarifa_operacional">Tarifa Operacional</router-link></li>
+        <li><router-link to="/admin/routes/establecer_tarifa_global">Establecer Tarifa Global</router-link></li>
         <li><router-link to="/admin/routes/actualizar_tarifa_global">Actualizar Tarifa Global</router-link></li>
       </ul>
     </div>
